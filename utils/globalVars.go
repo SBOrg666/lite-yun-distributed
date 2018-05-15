@@ -10,4 +10,5 @@ var (
 	Current_Month int
 	ServersMap    map[string]gjson.Result
 	ServersString string
+	Port     uint
 )

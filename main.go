@@ -11,9 +11,16 @@ import (
 	"github.com/tidwall/gjson"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-contrib/sessions"
+	"flag"
+	"fmt"
 )
 
 func main() {
+	port := flag.Uint("p", 8000, "port to serve")
+	flag.Parse()
+
+	utils.Port = *port
+
 	router := gin.Default()
 	router.Use(cors.Default())
 
@@ -83,5 +90,5 @@ func main() {
 	utils.Current_Month = int(time.Now().Month())
 	gocron.Every(1).Day().Do(utils.UpdateNetworkData)
 
-	router.Run(":8000")
+	router.Run(":" + fmt.Sprint(*port))
 }
