@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Lite Yun - Server List</title>
+    <!-- Bootstrap core CSS-->
+    <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom fonts for this template-->
+    <link href="/static/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <!-- Page level plugin CSS-->
+    <link href="/static/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+    <!-- Custom styles for this template-->
+    <link href="/static/css/sb-admin.css" rel="stylesheet">
+    <style>
+        a:hover {
+            text-decoration: none;
+        }
+
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .content-wrapper {
+            margin-left: 0;
+            padding-left: 150px;
+            padding-right: 150px;
+        }
+
+        .sticky-footer {
+            width: 100% !important;
+        }
+
+        .card-body p {
+            margin-top: 0.5rem;
+            margin-bottom: 0;
+        }
+
+        .card-body p a {
+            cursor: auto;
+        }
+
+        .card-text {
+            font-weight: 500;
+        }
+
+        .card-footer {
+            padding: 0.5rem 1.25rem;
+        }
+
+        .card {
+            -webkit-column-break-inside: avoid;
+            page-break-inside: avoid;
+        }
+
+        .status {
+            float: right;
+            font-size: 90%;
+            font-weight: 500;
+        }
+
+        .status i {
+            width: 16px;
+            height: 16px;
+            display: inline-block;
+            vertical-align: middle;
+            border-radius: 16px;
+            vertical-align: middle;
+            margin-top: -1px;
+            background-position: 24px 24px;
+            background-repeat: no-repeat;
+            background-image: url("/static/images/ecs-icons.png");
+        }
+
+        .status-running i {
+            background-position: -61px -4px;
+        }
+
+        .status-shutdown i {
+            background-position: -61px -28px;
+        }
+
+        .status:after {
+            display: inline;
+            padding-left: 5px;
+        }
+
+        .status-running:after {
+            content: "online";
+        }
+
+        .status-shutdown:after {
+            content: "offline";
+        }
+
+        .card-body {
+            position: relative;
+        }
+
+        .operation {
+            position: absolute;
+            right: 15px;
+            bottom: 10px;
+        }
+
+        .dot {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            background: url('/static/images/icons-comment.png') no-repeat;
+            background-position: -151px -280px;
+        }
+
+        .dot:hover {
+            background-position: -216px -280px;
+            olor: #000;
+        }
+
+        .operation-list {
+            display: none;
+            position: absolute;
+            width: 90px;
+            right: 0;
+            top: 20px;
+            background: #fff;
+            box-shadow: 0 0 5px rgba(0, 0, 0, .2);
+            border-radius: 4px;
+            color: #222;
+            font-size: 14px;
+            padding: 8px 0;
+            z-index: 999;
+        }
+
+        .operation-list li {
+            padding: 0 21px;
+            cursor: pointer;
+            height: 30px;
+            line-height: 30px;
+            transition: all .3s;
+        }
+
+        .operation-list li:hover {
+            background-color: #e5e9ef;
+            color: #00a1d6;
+        }
+
+        #addModal .modal-body label {
+            width: 150px;
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body class="fixed-nav sticky-footer bg-dark" id="page-top">
+<!-- Navigation-->
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+    <a class="navbar-brand" href="index.html">Lite Yun</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+            data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+            aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
+                    <i class="fa fa-fw fa-sign-out"></i>Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="#">Dashboard</a></li>
+            <li class="breadcrumb-item active">My Dashboard</li>
+        </ol>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <!-- Card Columns Example Social Feed-->
+                <div class="mb-0 mt-4">
+                    <i class="fa fa-newspaper-o"></i>
+                    My Servers
+                    <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#addModal"
+                            style="margin-top: -8px;">Add a server
+                    </button>
+                </div>
+                <hr class="mt-2">
+                <div class="card-columns">
+                    <!-- Example Social Card-->
+                    <p>empty</p>
+                {{/*<div class="card mb-3">*/}}
+                {{/*<div class="card-body">*/}}
+                {{/*<h6 class="card-title clearfix">*/}}
+                {{/*<a href="#">ID1</a>*/}}
+                {{/*<span class="status status-running">*/}}
+                {{/*<i></i></span></h6>*/}}
+                {{/*<hr class="my-0">*/}}
+                {{/*<p class="card-text small">*/}}
+                {{/*Name:*/}}
+                {{/*<a href="#">chenny</a></p>*/}}
+                {{/*<p class="card-text small">*/}}
+                {{/*Password:*/}}
+                {{/*<a href="#">admin</a></p>*/}}
+                {{/*<p class="card-text small">*/}}
+                {{/*Ip Addr:*/}}
+                {{/*<a href="#">192.168.111.112</a></p>*/}}
+                {{/*<p class="card-text small">*/}}
+                {{/*Port:*/}}
+                {{/*<a href="#">8000</a></p>*/}}
+                {{/*<div class="operation">*/}}
+                {{/*<div class="dot"></div>*/}}
+                {{/*<div class="operation-list">*/}}
+                {{/*<ul>*/}}
+                {{/*<li class="delete"><a data-toggle="modal" data-target="#deleteModal">Delete</a></li></ul></div></div></div>*/}}
+                {{/*<div class="card-footer small text-muted">Posted 32 mins ago</div>*/}}
+                {{/*</div>*/}}
+                </div>
+                <!-- /Card Columns-->
+            </div>
+        </div>
+    </div>
+    <!-- /.container-fluid-->
+    <!-- /.content-wrapper-->
+    <footer class="sticky-footer">
+        <div class="container">
+            <div class="text-center">
+                <small>Copyright © Lite Yun 2018</small>
+            </div>
+        </div>
+    </footer>
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fa fa-angle-up"></i>
+    </a>
+    <!-- Logout Modal-->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="/login" id="logout_btn">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Delete Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteLabel">Confirm to delete?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">Select "Delete" below if you are confirm to delete the server from your current
+                    list.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Add Modal -->
+    <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addLabel">Add a server</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <label for="addip">Server ip: </label>
+                    <input id="addip" type="text"/>
+                    <label for="addport">Server port: </label>
+                    <input id="addport" type="text"/>
+                    <label for="addusername">username: </label>
+                    <input id="addusername" type="text"/>
+                    <label for="addpassword">password: </label>
+                    <input id="addpassword" type="text"/>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+<!-- Bootstrap core JavaScript-->
+<script src="/static/vendor/jquery/jquery.min.js"></script>
+<script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Core plugin JavaScript-->
+<script src="/static/vendor/jquery-easing/jquery.easing.min.js"></script>
+<!-- Custom scripts for all pages-->
+<script src="/static/js/sb-admin.min.js"></script>
+<script src="/static/js.cookie-2.2.0.min.js"></script>
+<script type="text/javascript">
+    function gettime() {
+        var d = new Date();
+        return d.toString();
+    }
+
+    function bind() {
+        $("#deleteModal .btn-default").click(function () {
+            delete_eq = -1;
+        });
+        $("#deleteModal .btn-primary").click(function () {
+            $.ajax({
+                url: "/deleteServer",
+                type: "post",
+                timeout: 1000,
+                data: {
+                    token: serverlist[delete_eq].Token
+                },
+                success: function (res) {
+                    if (res === "ok") {
+                        window.location.reload();
+                    }
+                },
+                error: function () {
+                    // console.log("delete error"+jqXHR.status);
+                }
+            })
+        });
+
+        $("#addModal .btn-primary").click(function () {
+            var t = $("#addModal .modal-body input");
+            var info = {
+                Ip: t.eq(0).val(),
+                Port: t.eq(1).val(),
+                Username: t.eq(2).val(),
+                Password: t.eq(3).val()
+            };
+            $.ajax({
+                url: "http://" + info.Ip + ':' + info.Port + '/login',
+                type: "post",
+                timeout: 1000,
+                data: {
+                    "username": info.Username,
+                    "password": info.Password
+                },
+                success: function (res) {
+                    if (res === "failed")
+                        return;
+
+                    $.ajax({
+                        url: "/addServer",
+                        type: "post",
+                        data: {
+                            server: JSON.stringify({
+                                "Servers": {
+                                    "Token": res,
+                                    "Username": info.Username,
+                                    "Password": info.Password,
+                                    "Ip": info.Ip,
+                                    "Port": info.Port
+                                }
+                            }),
+                            token: res,
+                        },
+                        success: function (res) {
+                            if (res === "ok") {
+                                window.location.reload();
+                            }
+                        }
+                    })
+                }
+            });
+
+
+        });
+    }
+
+    function loadlist() {
+        $(".card-columns").html("");
+        for (var i = 0; i < serverlist.length; i++) {
+            var t = serverlist[i];
+            var str = "<div class='card mb-3'> <div class='card-body'> <h6 class='card-title clearfix'>ID:  <a>"
+                    + t.Token + "</a> <span class='status status-shutdown'> <i></i></span></h6> <hr class='my-0'> <p class='card-text small'> " +
+                    "Ip Address: <a href='#'>" + t.Ip + "</a></p> <p class='card-text small'> " +
+                    "Port: <a href='#'>" + t.Port + "</a></p> <p class='card-text small'> " +
+                    "Name: <a href='#'>" + t.Username + "</a></p> <p class='card-text small'> " +
+                    "Password: <a href='#'>" + t.Password + "</a> </p>" +
+                    "<div class='operation'><div class=\"dot\"></div><div class=\"operation-list\">" +
+                    "<ul><li class=\"delete\"><a data-toggle=\"modal\" data-target=\"#deleteModal\">Delete</a></li></ul></div></div></div> <div class='card-footer small text-muted'>Last Online: "
+                    + gettime() + "</div> </div>";
+
+            $(".card-columns").append(str);
+        }
+
+        if (serverlist.length === 2) {
+            $(".card-columns .card").css({display: "flex"});
+        }
+
+        $(".operation .dot").click(function () {
+            $(this).next().css({display: "block"});
+        });
+        $(".operation-list").mouseleave(function () {
+            $(this).css({display: "none"});
+        });
+        delete_eq = -1;
+        $(".operation-list .delete").click(function () {
+            delete_eq = $(".operation-list .delete").index($(this));
+        });
+
+    }
+
+    function serverping(eq) {
+        var info = serverlist[eq];
+        $.ajax({
+            url: "http://" + info.Ip + ':' + info.Port + '/ping',
+            timeout: 1000,
+            type: "post",
+            context: $(".card-columns .card").eq(eq),
+            data: {},
+            success: function (res) {
+                if (res !== "failed") {
+                    var eq = $(this).index();
+                    $(".card-columns .card").eq(eq).find(".card-footer").html("Last Online: " + gettime());
+                } else {
+                    var eq = $(this).index();
+                    onlinelist[eq] = "offline";
+                    var t = $(".card-columns .card").eq(eq).find(".status");
+                    t.removeClass("status-running");
+                    t.addClass("status-shutdown");
+                    t.prev().removeAttr("href");
+                }
+            },
+            error: function (jqXHR) {
+                var eq = $(this).index();
+                onlinelist[eq] = "offline";
+                var t = $(".card-columns .card").eq(eq).find(".status");
+                t.removeClass("status-running");
+                t.addClass("status-shutdown");
+                t.prev().removeAttr("href");
+
+                // console.clear();
+            }
+        });
+    }
+
+    function serverlogin(eq) {
+        var info = serverlist[eq];
+        $.ajax({
+            url: "http://" + info.Ip + ':' + info.Port + '/login',
+            timeout: 1000,
+            type: "post",
+            context: $(".card-columns .card").eq(eq),
+            data: {
+                "username": info.Username,
+                "password": info.Password
+            },
+            success: function (res) {
+                if (res !== "failed") {
+                    var eq = $(this).index();
+                    onlinelist[eq] = "online";
+                    var t = $(".card-columns .card").eq(eq).find(".status");
+                    t.removeClass("status-shutdown");
+                    t.addClass("status-running");
+                    t.prev().attr('href', "/?token=" + serverlist[eq].Token);
+                    $(".card-columns .card").eq(eq).find(".card-footer").html("Last Online: " + gettime());
+
+
+                    if (true) {
+                        $.ajax({
+                            url: "/changeToken",
+                            type: "POST",
+                            data: {
+                                pre: serverlist[eq].Token,
+                                now: res
+                            },
+                            success: function (res) {
+                                if (res === "ok")
+                                    window.location.reload();
+                            }
+                        })
+                    }
+                }
+            },
+            error: function (jqXHR) {
+                // console.log("error"+jqXHR.status);
+            }
+        });
+    }
+
+    function update(eq) {
+        if (onlinelist[eq] === "offline") {
+            serverlogin(eq);
+        } else {
+            serverping(eq);
+        }
+        // var t = serverlist[eq];
+        // $(".card-columns .card").eq(eq);
+    }
+
+    $(function () {
+        serverlist = [];
+        onlinelist = [];
+        interval = "";
+        $.ajax({
+            url: "/listServer",
+            type: "post",
+            data: {},
+            success: function (res) {
+                bind();
+                if (res === "{\"Servers\":[]}") {
+                    return;
+                }
+                serverlist = JSON.parse(res).Servers;
+                loadlist();
+                for (var i = 0; i < serverlist.length; i++) {
+                    onlinelist[i] = "offline";
+
+                    // if(interval)
+                    //     clearInterval(interval);
+                    setInterval("update(" + i + ")", 5000);
+                }
+            }
+        });
+    });
+
+    $("#logout_btn").click(function () {
+        Cookies.remove('session');
+    });
+</script>
+
+</html>

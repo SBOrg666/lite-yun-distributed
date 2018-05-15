@@ -1,0 +1,24 @@
+GET http://localhost:8000/processes.html?username=zhang&password=aaa&id=b
+Accept: */*
+Cache-Control: no-cache
+
+<> 2018-05-13T070413.200.html
+
+###
+
+POST http://localhost:8000/login?username=zhang&password=aaa
+Accept: */*
+Cache-Control: no-cache
+
+<> 2018-05-13T070320.200.txt
+
+###
+
+POST http://localhost:8001/login?username=zhang&password=aaa
+Accept: */*
+Cache-Control: no-cache
+
+<> 2018-05-13T070218.200.txt
+
+###
+
